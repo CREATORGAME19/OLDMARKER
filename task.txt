@@ -1,3 +1,6 @@
 1To write print("Hi")`@
 Hi~
 //-END-//
+2Write a program that detects if you type "Hi" and if this condition is true it should output "Hello there"`"Hi"@
+Hello there~
+//-END-//
