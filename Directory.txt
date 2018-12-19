@@ -1,2 +1,2 @@
-Print Task
-Input Test
+1. Print Task
+2. Input Test
