@@ -1,7 +1,7 @@
 import os
 import urllib.request
 print("Marker made by Calin Novogreblevschi.")
-print("Beta V1.0")
+print("Beta V2")
 bad_chars="[]',"
 print("Updating data...")
 data = urllib.request.urlretrieve("https://raw.githubusercontent.com/CREATORGAME19/MARKER/master/Directory.txt","tasklist.txt")
@@ -16,19 +16,18 @@ task = input("Which task do you want to submit?: ")
 d = open("task.txt")
 tasknum = d.read().find(task) + 1
 d = open("task.txt")
-endtasktxt = d.read().find("`")
+endtasktxt = d.read().find(str(task)+"`")
 d = open("task.txt")
-endinput = d.read().find("@")
+endinput = d.read().find(str(task)+"@")
 d = open("task.txt")
-enteredinput = d.read()[endtasktxt+2:endinput-1]
-print(enteredinput)
+enteredinput = d.read()[endtasktxt+2:endinput]
 d = open("task.txt")
 print("Your task is: ")
 print(d.read()[tasknum:endtasktxt])
 d = open("task.txt")
-endexpecttask = d.read().find("//-END-//")
+endexpecttask = d.read().find("//-END-//"+str(task))
 d = open("task.txt")
-expectedoutput = d.read()[endinput+2:endexpecttask-1]
+expectedoutput = d.read()[endinput+len(task)+2:endexpecttask-3]
 lines = int(input("How many lines are in your python code: "))
 submit = []
 a_submit = []
@@ -46,6 +45,12 @@ for i in range(len(submit)):
         else:
             a_submit.append("output = ["+str(value)+"]")
         output+=1
+    elif submit[i].find("input(") != -1:
+        code = submit[i]
+        find = submit[i].find("input(")
+        value = code[:find-1]
+        a_submit.append(value+str(enteredinput))
+
 file = open("mark.py", "w")
 file.write(a_submit[0])
 file.close()
@@ -94,13 +99,18 @@ for i in range(len(char)):
         word = ""
 print("Done filtering!")
 d = open("task.txt")
+a_task = False
 for i in range(len(expectedoutput)):
     d = open("task.txt")
-    if not expectedoutput[i] == "~":
+    if not expectedoutput[i] == "~" and a_task == False:
         char1.append(expectedoutput[i])
         insertend1 = True
     elif insertend1 == True:
         insertend1 = False
+        a_task = True
+        i_clock = i
+    elif i_clock+len(str(task)) == i:
+        a_task = False
         char1.append("END")
 for i in range(len(char1)):
     if char1[i] != "END":
