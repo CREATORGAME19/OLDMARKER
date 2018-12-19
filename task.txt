@@ -1,0 +1,3 @@
+1To write print("Hi")`@
+Hi~
+//-END-//
