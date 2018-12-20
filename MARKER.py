@@ -167,6 +167,7 @@ else:
     os.remove("tasklist.txt")
     os.remove("mark.py")
     os.remove("output.txt")
+    os.remove("V.txt")
     print("Done!")
     print("You got",mark,"out of",total_marks)
 
