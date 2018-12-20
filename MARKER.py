@@ -1,3 +1,4 @@
+import time
 import os
 import urllib.request
 print("Marker made by Calin Novogreblevschi.")
@@ -15,6 +16,7 @@ if v.read() != version:
     print("Downloading...")
     data0 = urllib.request.urlretrieve("https://raw.githubusercontent.com/CREATORGAME19/MARKER/master/update.py","temp_update.py")
     print(os.system('temp_update.py'))
+    time.sleep(5)
 else:
     data = urllib.request.urlretrieve("https://raw.githubusercontent.com/CREATORGAME19/MARKER/master/Directory.txt","tasklist.txt")
     data1 = urllib.request.urlretrieve("https://raw.githubusercontent.com/CREATORGAME19/MARKER/master/task.txt","task.txt")
