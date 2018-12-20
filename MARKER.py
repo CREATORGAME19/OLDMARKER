@@ -5,6 +5,7 @@ version = "Alpha V1"
 print(version)
 bad_chars="[]',"
 f = open("temp_update.py","w")
+f.close()
 os.remove("temp_update.py")
 print("Updating data...")
 data0 = urllib.request.urlretrieve("https://raw.githubusercontent.com/CREATORGAME19/MARKER/master/Version","V.txt")
