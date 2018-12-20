@@ -1,7 +1,7 @@
 import os
 import urllib.request
 print("Marker made by Calin Novogreblevschi.")
-version = "Beta V2.1"
+version = "Alpha V1"
 print(version)
 bad_chars="[]',"
 os.remove("temp_update.py")
