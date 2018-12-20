@@ -1,7 +1,8 @@
 import os
 import urllib.request
 print("Marker made by Calin Novogreblevschi.")
-print("Beta V2")
+version = "Beta V2.1"
+print(version)
 bad_chars="[]',"
 print("Updating data...")
 data = urllib.request.urlretrieve("https://raw.githubusercontent.com/CREATORGAME19/MARKER/master/Directory.txt","tasklist.txt")
@@ -21,6 +22,25 @@ d = open("task.txt")
 endinput = d.read().find(str(task)+"@")
 d = open("task.txt")
 enteredinput = d.read()[endtasktxt+2:endinput]
+endinput_list = []
+char_input = []
+insertend = False
+word_input = ""
+for i in range(len(enteredinput)):
+    if enteredinput[i].find(",") == -1:
+        char_input.append(enteredinput[i])
+        insertend = True
+    elif insertend == True:
+        insertend = False
+        char_input.append("END")
+for i in range(len(char_input)):
+    if char_input[i] != "END":
+        word_input = word_input+char_input[i]
+    else:
+        endinput_list.append(word_input)
+        word_input = ""
+print(endinput_list)
+d = open("task.txt")
 d = open("task.txt")
 print("Your task is: ")
 print(d.read()[tasknum:endtasktxt])
@@ -32,6 +52,8 @@ lines = int(input("How many lines are in your python code: "))
 submit = []
 a_submit = []
 output = 0
+stat_input = 0
+received_input=0
 for x in range(lines):
     y = x+1
     submit.append(input("Enter line "+str(y)+" of your code: "))
@@ -49,8 +71,9 @@ for i in range(len(submit)):
         code = submit[i]
         find = submit[i].find("input(")
         value = code[:find-1]
-        a_submit.append(value+str(enteredinput))
-
+        a_submit.append(value+str(endinput_list[stat_input]))
+        stat_input += 1
+        received_input += 1
 file = open("mark.py", "w")
 file.write(a_submit[0])
 file.close()
@@ -120,10 +143,12 @@ for i in range(len(char1)):
         word1 = ""
 print("Done filtering!(expected output)")
 mark = 0
-total_marks = len(words1)
+total_marks = len(words1)+len(endinput_list)
 for i in range(len(words1)):
     if words1[i] == words[i]:
         mark+=1
+if received_input == len(endinput_list):
+    mark+=received_input
 print("Cleaning up...")
 d.close()
 f.close()
@@ -134,4 +159,3 @@ os.remove("mark.py")
 os.remove("output.txt")
 print("Done!")
 print("You got",mark,"out of",total_marks)
-
