@@ -6,7 +6,7 @@ from tkinter import *
 root = Tk()
 root.title("Marker made by Calin Novogreblevschi.")
 root.geometry("800x500")
-version = "Alpha V2.1"
+version = "Alpha V2.2"
 
 label = Label(root,text = "MARKER "+version)
 label.pack()
@@ -236,7 +236,9 @@ else:
                 mark = 0
                 total_marks = (len(words1)-1)+len(endinput_list)
                 for i in range(len(words1)-1):
-                    if words1[i] == words[i]:
+                    if words1[i].upper() == words[i].upper():
+                        mark+=1
+                    elif words[i].upper().find(words1[i].upper()) != -1:
                         mark+=1
                 if received_input == len(endinput_list):
                         mark+=received_input
