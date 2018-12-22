@@ -51,17 +51,19 @@ else:
     task = 0
     def del_task():
         global task
-        task = e.get()
+        task = int(e.get())
         e.destroy()
         ent_button.destroy()
+        task = str(task)
         task_dis()
         
     def task_dis():
+        
         info1.pack_forget()
         info2.pack_forget()
         info3.pack_forget()
         d = open("task.txt")
-        tasknum = d.read().find(task) + 1
+        tasknum = d.read().find(str(task)) + 1
         d = open("task.txt")
         endtasktxt = d.read().find(str(task)+"`")
         d = open("task.txt")
