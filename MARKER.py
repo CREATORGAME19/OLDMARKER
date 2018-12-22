@@ -3,6 +3,7 @@ import time
 import os
 import urllib.request
 from tkinter import *
+import random
 root = Tk()
 root.title("Marker made by Calin Novogreblevschi.")
 root.geometry("800x500")
@@ -139,15 +140,17 @@ else:
                 output = 0
                 received_input=0
                 stat_input = 0
+                outputvar1 = random.randint(1000,10000)
+                outputvar = "a"+str(outputvar1)
                 for i in range(len(submit)):
                     if submit[i].find("print(") != -1:
                         code = submit[i]
                         find = submit[i].find("print(")
                         value = code[find+6:-1]
                         if output > 0:
-                            a_submit.append("output.append("+str(value)+")")
+                            a_submit.append(str(outputvar)+".append("+str(value)+")")
                         else:
-                            a_submit.append("output = ["+str(value)+"]")
+                            a_submit.append(str(outputvar)+" = ["+str(value)+"]")
                             output+=1
                     elif submit[i].find("input(") != -1:
                         code = submit[i]
@@ -169,7 +172,7 @@ else:
                 status_bar1 = Label(root, text="Testing...", bd=1, relief=SUNKEN, anchor=W)
                 status_bar1.pack(side=BOTTOM, fill=X)
                 file2 = open("mark.py", "a")
-                file2.write('\n'+"  "+"f.write(str(output))")
+                file2.write('\n'+"  "+"f.write(str("+str(outputvar)+"))")
                 file2.close()
                 print("Test program created!")
                 status_bar1.pack_forget()
