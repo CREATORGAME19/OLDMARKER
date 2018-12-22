@@ -101,7 +101,7 @@ else:
         info5 = Label(root,text = "Enter your python code: ")
         info5.pack()
         
-        e = Entry(root, width=50)
+        e = Entry(root, width=60)
         e.pack(side=TOP)
         ent_button = Button(root, text="Enter", width=10,command= lambda: lines_entered() )
         ent_button.pack(side=TOP)
