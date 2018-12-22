@@ -109,156 +109,145 @@ else:
         def lines_entered():
             code = e.get()
             ent_button.destroy()
-            ent_button2 = Button(root, text="Next", width=10,command= lambda: analyse() )
-            ent_button2.pack(side=TOP)
-            def analyse():
-                code = e.get()
-                e.destroy()
-                ent_button2.destroy()
-                submit = []
-                a_submit = []
-                info5.destroy()
-                stat_input = 0
-                submitappend = ""
-                for x in range(len(code)):
-                    if code[x] == ";":
-                        submit.append(submitappend)
-                        submitappend = ""
+            e.destroy()
+            submit = []
+            a_submit = []
+            info5.destroy()
+            stat_input = 0
+            submitappend = ""
+            for x in range(len(code)):
+                if code[x] == ";":
+                    submit.append(submitappend)
+                    submitappend = ""
+                else:
+                    submitappend = str(submitappend)+str(code[x])
+                                
+            a_submit = []
+            output = 0
+            received_input=0
+            stat_input = 0
+            outputvar1 = random.randint(1000,10000)
+            outputvar = "a"+str(outputvar1)
+            for i in range(len(submit)):
+                if submit[i].find("print(") != -1:
+                    code = submit[i]
+                    find = submit[i].find("print(")
+                    value = code[find+6:-1]
+                    if output > 0:
+                        a_submit.append(str(outputvar)+".append("+str(value)+")")
                     else:
-                        submitappend = str(submitappend)+str(code[x])
-                        
-                    def code_lines():
-                        submitappend = e.get()
-                        e.destroy()
-                        ent_button.destroy()
-                        info4.destroy()
-                        info0.destroy()
-                            
-
-                    
-                a_submit = []
-                output = 0
-                received_input=0
-                stat_input = 0
-                outputvar1 = random.randint(1000,10000)
-                outputvar = "a"+str(outputvar1)
-                for i in range(len(submit)):
-                    if submit[i].find("print(") != -1:
-                        code = submit[i]
-                        find = submit[i].find("print(")
-                        value = code[find+6:-1]
-                        if output > 0:
-                            a_submit.append(str(outputvar)+".append("+str(value)+")")
-                        else:
-                            a_submit.append(str(outputvar)+" = ["+str(value)+"]")
-                            output+=1
-                    elif submit[i].find("input(") != -1:
-                        code = submit[i]
-                        find = submit[i].find("input(")
-                        value = code[:find-1]
-                        a_submit.append(value+str(endinput_list[stat_input]))
-                        stat_input += 1
-                        received_input += 1
-                file = open("mark.py", "w")
-                file.write(a_submit[0])
+                        a_submit.append(str(outputvar)+" = ["+str(value)+"]")
+                        output+=1
+                elif submit[i].find("input(") != -1:
+                    code = submit[i]
+                    find = submit[i].find("input(")
+                    value = code[:find-1]
+                    a_submit.append(value+str(endinput_list[stat_input]))
+                    stat_input += 1
+                    received_input += 1
+            file = open("mark.py", "w")
+            file.write(a_submit[0])
+            file.close()
+            for i in range(len(a_submit)-1):
+                file = open("mark.py", "a")
+                file.write('\n'+a_submit[i+1])
                 file.close()
-                for i in range(len(a_submit)-1):
-                    file = open("mark.py", "a")
-                    file.write('\n'+a_submit[i+1])
-                    file.close()
-                file1 = open("mark.py", "a")
-                file1.write('\n'+"with open(\"output.txt\", \"w\") as f:")
-                file1.close()
-                status_bar1 = Label(root, text="Testing...", bd=1, relief=SUNKEN, anchor=W)
-                status_bar1.pack(side=BOTTOM, fill=X)
-                file2 = open("mark.py", "a")
-                file2.write('\n'+"  "+"f.write(str("+str(outputvar)+"))")
-                file2.close()
-                print("Test program created!")
-                status_bar1.pack_forget()
-                status_bar1 = Label(root, text="Running...", bd=1, relief=SUNKEN, anchor=W)
-                status_bar1.pack(side=BOTTOM, fill=X)
-                print(os.system('mark.py'))
-                print("Attempting to gather output data...")
+            file1 = open("mark.py", "a")
+            file1.write('\n'+"with open(\"output.txt\", \"w\") as f:")
+            file1.close()
+            status_bar1 = Label(root, text="Testing...", bd=1, relief=SUNKEN, anchor=W)
+            status_bar1.pack(side=BOTTOM, fill=X)
+            file2 = open("mark.py", "a")
+            file2.write('\n'+"  "+"f.write(str("+str(outputvar)+"))")
+            file2.close()
+            print("Test program created!")
+            status_bar1.pack_forget()
+            status_bar1 = Label(root, text="Running...", bd=1, relief=SUNKEN, anchor=W)
+            status_bar1.pack(side=BOTTOM, fill=X)
+            print(os.system('mark.py'))
+            print("Attempting to gather output data...")
+            r = open("output.txt")
+            print("Gathered successfully!")
+            status_bar1.pack_forget()
+            status_bar1 = Label(root, text="Marking...", bd=1, relief=SUNKEN, anchor=W)
+            status_bar1.pack(side=BOTTOM, fill=X)
+            char = []
+            char1 = []
+            insertend = False
+            insertend1 = False
+            words = []
+            words1 = []
+            word = ""
+            word1 = ""
+            for i in range(len(r.read())):
                 r = open("output.txt")
-                print("Gathered successfully!")
-                status_bar1.pack_forget()
-                status_bar1 = Label(root, text="Marking...", bd=1, relief=SUNKEN, anchor=W)
-                status_bar1.pack(side=BOTTOM, fill=X)
-                char = []
-                char1 = []
-                insertend = False
-                insertend1 = False
-                words = []
-                words1 = []
-                word = ""
-                word1 = ""
-                for i in range(len(r.read())):
+                if bad_chars.find(r.read()[i]) == -1:
                     r = open("output.txt")
-                    if bad_chars.find(r.read()[i]) == -1:
-                        r = open("output.txt")
-                        char.append(r.read()[i])
-                        r = open("output.txt")
-                        insertend = True
-                    elif insertend == True:
-                        insertend = False
-                        char.append("END")
-                for i in range(len(char)):
-                    if char[i] != "END":
-                        word = word+char[i]
-                    else:
-                        words.append(word)
-                        word = ""
-                status_bar1.pack_forget()            
-                status_bar1 = Label(root, text="Done filtering!", bd=1, relief=SUNKEN, anchor=W)
-                status_bar1.pack(side=BOTTOM, fill=X)
+                    char.append(r.read()[i])
+                    r = open("output.txt")
+                    insertend = True
+                elif insertend == True:
+                    insertend = False
+                    char.append("END")
+            for i in range(len(char)):
+                if char[i] != "END":
+                    word = word+char[i]
+                else:
+                    words.append(word)
+                    word = ""
+            status_bar1.pack_forget()            
+            status_bar1 = Label(root, text="Done filtering!", bd=1, relief=SUNKEN, anchor=W)
+            status_bar1.pack(side=BOTTOM, fill=X)
+            d = open("task.txt")
+            a_task = False
+            for i in range(len(expectedoutput)):
                 d = open("task.txt")
-                a_task = False
-                for i in range(len(expectedoutput)):
-                    d = open("task.txt")
-                    if not expectedoutput[i] == "~" and a_task == False:
-                        char1.append(expectedoutput[i])
-                        insertend1 = True
-                    elif insertend1 == True:
-                        insertend1 = False
-                        a_task = True
-                        i_clock = i
-                        char1.append("END")
-                    elif i_clock+len(str(task)) == i:
-                        a_task = False
-                        char1.append("END")
-                for i in range(len(char1)):
-                    if char1[i] != "END":
-                        word1 = word1+char1[i]
-                    else:
-                        words1.append(word1)
-                        word1 = ""
-                status_bar1.pack_forget()
-                status_bar1 = Label(root, text="Done filtering!(expected output)", bd=1, relief=SUNKEN, anchor=W)
-                status_bar1.pack(side=BOTTOM, fill=X)
-                mark = 0
-                total_marks = (len(words1)-1)+len(endinput_list)
-                for i in range(len(words1)-1):
-                    if words1[i].upper() == words[i].upper():
-                        mark+=1
-                    elif words[i].upper().find(words1[i].upper()) != -1:
-                        mark+=1
-                if received_input == len(endinput_list):
-                        mark+=received_input
-                status_bar1.pack_forget()
-                status_bar1 = Label(root, text="Cleaning up...", bd=1, relief=SUNKEN, anchor=W)
-                status_bar1.pack(side=BOTTOM, fill=X)
-                d.close()
-                f.close()
-                r.close()
-                os.remove("tasklist.txt")
-                os.remove("mark.py")
-                os.remove("output.txt")
-                status_bar1.pack_forget()
-                status_bar1 = Label(root, text="Done!", bd=1, relief=SUNKEN, anchor=W)
-                status_bar1.pack(side=BOTTOM, fill=X)       
-                info7 = Label(root,text ="You got "+str(mark)+" out of "+str(total_marks)+" on this task!")
-                info7.pack()
+                if not expectedoutput[i] == "~" and a_task == False:
+                    char1.append(expectedoutput[i])
+                    insertend1 = True
+                elif insertend1 == True:
+                    insertend1 = False
+                    a_task = True
+                    i_clock = i
+                    char1.append("END")
+                elif i_clock+len(str(task)) == i:
+                    a_task = False
+                    char1.append("END")
+            for i in range(len(char1)):
+                if char1[i] != "END":
+                    word1 = word1+char1[i]
+                else:
+                    words1.append(word1)
+                    word1 = ""
+            status_bar1.pack_forget()
+            status_bar1 = Label(root, text="Done filtering!(expected output)", bd=1, relief=SUNKEN, anchor=W)
+            status_bar1.pack(side=BOTTOM, fill=X)
+            mark = 0
+            total_marks = (len(words1)-1)+len(endinput_list)
+            for i in range(len(words1)-1):
+                if words1[i].upper() == words[i].upper():
+                    mark+=1
+                elif words[i].upper().find(words1[i].upper()) != -1:
+                    mark+=1
+            if received_input == len(endinput_list):
+                    mark+=received_input
+            status_bar1.pack_forget()
+            status_bar1 = Label(root, text="Cleaning up...", bd=1, relief=SUNKEN, anchor=W)
+            status_bar1.pack(side=BOTTOM, fill=X)
+            info0.destroy()
+            info4.destroy()
+            d.close()
+            f.close()
+            r.close()
+            os.remove("tasklist.txt")
+            os.remove("mark.py")
+            os.remove("output.txt")
+            #os.remove("task.txt")
+            status_bar1.pack_forget()
+            status_bar1 = Label(root, text="Done!", bd=1, relief=SUNKEN, anchor=W)
+            status_bar1.pack(side=BOTTOM, fill=X)       
+            info7 = Label(root,text ="You got "+str(mark)+" out of "+str(total_marks)+" on this task!")
+            info7.pack()
                         
          
 
