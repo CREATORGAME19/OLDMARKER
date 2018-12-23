@@ -145,6 +145,8 @@ else:
                     a_submit.append(value+str(endinput_list[stat_input]))
                     stat_input += 1
                     received_input += 1
+                else:
+                    a_submit.append(submit[i])
             file = open("mark.py", "w")
             file.write(a_submit[0])
             file.close()
@@ -239,7 +241,7 @@ else:
             d.close()
             f.close()
             r.close()
-            os.remove("tasklist.txt")
+            #os.remove("tasklist.txt")
             os.remove("mark.py")
             os.remove("output.txt")
             #os.remove("task.txt")
