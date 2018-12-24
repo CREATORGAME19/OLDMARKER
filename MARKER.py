@@ -16,7 +16,9 @@ bad_chars="[]',"
 f = open("temp_update.py","w")
 f.close()
 os.remove("temp_update.py")
-
+f = open("V.txt","w")
+f.close()
+os.remove("V.txt")
 data0 = urllib.request.urlretrieve("https://raw.githubusercontent.com/CREATORGAME19/MARKER/master/Version","V.txt")
 v = open("V.txt")
 
