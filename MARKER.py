@@ -30,6 +30,7 @@ if v.read().find(version) == -1:
     status_bar.pack(side=BOTTOM, fill=X)
     data0 = urllib.request.urlretrieve("https://raw.githubusercontent.com/CREATORGAME19/MARKER/master/update.py","temp_update.py")
     print(os.system('temp_update.py'))
+    os.remove("V.txt")
 else:
     info1 = Label(root,text = "What is your four digit school code?: ")
     info1.pack()
