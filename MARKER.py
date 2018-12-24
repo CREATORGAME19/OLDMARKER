@@ -164,9 +164,9 @@ else:
                     find = submit[i].find("print(")
                     value = code[find+6:-1]
                     if output > 0:
-                        a_submit.append(str(outputvar)+".append("+str(value)+")")
+                        a_submit.append(code[:find]+str(outputvar)+".append("+str(value)+")")
                     else:
-                        a_submit.append(str(outputvar)+" = ["+str(value)+"]")
+                        a_submit.append(code[:find]+str(outputvar)+" = ["+str(value)+"]")
                         output+=1
                 elif submit[i].find("input(") != -1:
                     code = submit[i]
@@ -281,10 +281,5 @@ else:
             status_bar1.pack(side=BOTTOM, fill=X)       
             info7 = Label(root,text ="You got "+str(mark)+" out of "+str(total_marks)+" on this task!")
             info7.pack()
-                        
-         
-
-      
-
     
 root.mainloop()
