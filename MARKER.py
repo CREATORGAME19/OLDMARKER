@@ -4,10 +4,11 @@ import os
 import urllib.request
 from tkinter import *
 import random
+from tkinter import messagebox
 root = Tk()
 root.title("Marker made by Calin Novogreblevschi.")
 root.geometry("800x500")
-version = "Alpha V2.2"
+version = "Alpha V2.3"
 
 label = Label(root,text = "MARKER "+version)
 label.pack()
@@ -15,8 +16,7 @@ bad_chars="[]',"
 f = open("temp_update.py","w")
 f.close()
 os.remove("temp_update.py")
-status_bar = Label(root, text="Updating data…", bd=1, relief=SUNKEN, anchor=W)
-status_bar.pack(side=BOTTOM, fill=X)
+
 data0 = urllib.request.urlretrieve("https://raw.githubusercontent.com/CREATORGAME19/MARKER/master/Version","V.txt")
 v = open("V.txt")
 
@@ -29,27 +29,48 @@ if v.read().find(version) == -1:
     data0 = urllib.request.urlretrieve("https://raw.githubusercontent.com/CREATORGAME19/MARKER/master/update.py","temp_update.py")
     print(os.system('temp_update.py'))
 else:
-    data = urllib.request.urlretrieve("https://raw.githubusercontent.com/CREATORGAME19/MARKER/master/Directory.txt","tasklist.txt")
-    data1 = urllib.request.urlretrieve("https://raw.githubusercontent.com/CREATORGAME19/MARKER/master/task.txt","task.txt")
-    status_bar.pack_forget()
-    status_bar = Label(root, text="Done!", bd=1, relief=SUNKEN, anchor=W)
-    status_bar.pack(side=BOTTOM, fill=X)
-    os.system('cls' if os.name=='nt' else 'clear')
-    f = open("tasklist.txt")
-    d = open("task.txt")
-    info1 = Label(root,text = "Here are the tasks: ")
+    info1 = Label(root,text = "What is your four digit school code?: ")
     info1.pack()
-    info2 = Label(root,text = f.read())
-    info2.pack()
-    info3 = Label(root,text = "Which task do you want to submit?: ")
-    info3.pack()
-    
     e = Entry(root, width=50)
     e.pack(side=TOP)
-    ent_button = Button(root, text="Enter", width=10,command= lambda: del_task() )
+    ent_button = Button(root, text="Enter", width=10,command= lambda: find_school() )
     ent_button.pack(side=TOP)
-    status_bar.pack_forget()
-    task = 0
+    def find_school():
+        global status_bar
+        status_bar = Label(root, text="Updating data…", bd=1, relief=SUNKEN, anchor=W)
+        status_bar.pack(side=BOTTOM, fill=X)
+        school = e.get()
+        e.destroy()
+        info1.destroy()
+        ent_button.destroy()
+        data = urllib.request.urlretrieve("https://raw.githubusercontent.com/CREATORGAME19/MARKER/master/"+school+"Directory.txt","tasklist.txt")
+        data1 = urllib.request.urlretrieve("https://raw.githubusercontent.com/CREATORGAME19/MARKER/master/"+school+"task.txt","task.txt")
+        status_bar.destroy()
+        status_bar = Label(root, text="Done!", bd=1, relief=SUNKEN, anchor=W)
+        status_bar.pack(side=BOTTOM, fill=X)
+        done()
+
+    def done():
+        os.system('cls' if os.name=='nt' else 'clear')
+        f = open("tasklist.txt")
+        d = open("task.txt")
+        global info1
+        global info2
+        global info3
+        info1 = Label(root,text = "Here are the tasks: ")
+        info1.pack()
+        info2 = Label(root,text = f.read())
+        info2.pack()
+        info3 = Label(root,text = "Which task do you want to submit?: ")
+        info3.pack()
+        task = 0
+        global e
+        e = Entry(root, width=50)
+        e.pack(side=TOP)
+        global ent_button
+        ent_button = Button(root, text="Enter", width=10,command= lambda: del_task() )
+        ent_button.pack(side=TOP)
+        
     def del_task():
         global task
         task = int(e.get())
@@ -100,7 +121,7 @@ else:
         info4.pack()
         info5 = Label(root,text = "Enter your python code: ")
         info5.pack()
-        
+        messagebox.showinfo("Attention!","Please make sure you include a ; after every line of code you enter!")
         e = Entry(root, width=60)
         e.pack(side=TOP)
         ent_button = Button(root, text="Enter", width=10,command= lambda: lines_entered() )
@@ -245,6 +266,7 @@ else:
             os.remove("mark.py")
             os.remove("output.txt")
             #os.remove("task.txt")
+            status_bar.destroy()
             status_bar1.pack_forget()
             status_bar1 = Label(root, text="Done!", bd=1, relief=SUNKEN, anchor=W)
             status_bar1.pack(side=BOTTOM, fill=X)       
