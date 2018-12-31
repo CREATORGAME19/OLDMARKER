@@ -8,7 +8,7 @@ from tkinter import messagebox
 root = Tk()
 root.title("Marker made by Calin Novogreblevschi.")
 root.geometry("800x500")
-version = "Alpha V2.3"
+version = "Alpha V2.4"
 
 label = Label(root,text = "MARKER "+version)
 label.pack()
