@@ -42,7 +42,6 @@ if v.read().find(version) == -1 :
     pr.close()
     os.remove("V.txt")
     os.remove("ex.txt")
-    os.remove("MARKER.py")
 elif pr.read() != pr2.read():
     label = Label(root,text = "Update avaliable!")
     label.pack()
@@ -55,8 +54,8 @@ elif pr.read() != pr2.read():
     pr.close()
     os.remove("V.txt")
     os.remove("ex.txt")
-    os.remove("MARKER.py")
 else:
+    pr2.close()
     os.remove("ex.txt")
     info1 = Label(root,text = "What is your four digit school code?: ")
     info1.pack()
