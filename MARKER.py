@@ -45,7 +45,7 @@ if v.read().find(version) == -1 :
     os.remove("V.txt")
     os.remove("ex.txt")
 elif pr.read() != pr2.read():
-    label = Label(root,text = "Update avaliable!")
+    label = Label(root,text = "Error: Illegal modification detected! This program will reinstall!")
     label.pack()
     status_bar = Label(root, text="Downloading...", bd=1, relief=SUNKEN, anchor=W)
     status_bar.pack(side=BOTTOM, fill=X)
