@@ -8,7 +8,7 @@ from tkinter import messagebox
 root = Tk()
 root.title("Marker made by Calin Novogreblevschi.")
 root.geometry("800x500")
-version = "Alpha V2.4"
+version = "Alpha V2.3"
 
 label = Label(root,text = "MARKER "+version)
 label.pack()
@@ -36,10 +36,10 @@ if v.read().find(version) == -1 :
     status_bar = Label(root, text="Downloading...", bd=1, relief=SUNKEN, anchor=W)
     status_bar.pack(side=BOTTOM, fill=X)
     data0 = urllib.request.urlretrieve("https://raw.githubusercontent.com/CREATORGAME19/MARKER/master/update.py","temp_update.py")
+    pr.close()
     print(os.system('temp_update.py'))
     v.close()
     pr2.close()
-    pr.close()
     os.remove("V.txt")
     os.remove("ex.txt")
 elif pr.read() != pr2.read():
@@ -48,10 +48,10 @@ elif pr.read() != pr2.read():
     status_bar = Label(root, text="Downloading...", bd=1, relief=SUNKEN, anchor=W)
     status_bar.pack(side=BOTTOM, fill=X)
     data0 = urllib.request.urlretrieve("https://raw.githubusercontent.com/CREATORGAME19/MARKER/master/update.py","temp_update.py")
+    pr.close()
     print(os.system('temp_update.py'))
     v.close()
     pr2.close()
-    pr.close()
     os.remove("V.txt")
     os.remove("ex.txt")
 else:
