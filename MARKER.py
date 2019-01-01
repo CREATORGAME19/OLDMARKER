@@ -148,7 +148,7 @@ else:
         info0 = Label(root,text = "Your task is: ")
         info0.pack()
         d = open("task.txt")
-        info4 = Label(root,text = d.read()[tasknum:endtasktxt])
+        info4 = Label(root,text = d.read()[tasknum+(len(str(task))-1):endtasktxt])
         info4.pack()
         info5 = Label(root,text = "Enter your python code: ")
         info5.pack()
