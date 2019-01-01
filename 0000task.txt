@@ -7,7 +7,8 @@ Hello there~2
 3Make a program that takes 2 inputs and then it should output the sum of both numbers3`1,2,3@
 3~3
 3//-END-//
-4A word game awards points for the letters used in a word.  The lower the frequency of the letter in the English language, the higher the score for the letter.  
+4A word game awards points for the letters used in a word.  
+The lower the frequency of the letter in the English language, the higher the score for the letter.  
 Write a program that asks the user to input a word.4`"calin",4@
 32~4
 4//-END-//
