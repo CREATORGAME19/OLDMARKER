@@ -83,7 +83,6 @@ else:
         done()
 
     def done():
-        os.system('cls' if os.name=='nt' else 'clear')
         f = open("tasklist.txt")
         d = open("task.txt")
         global info1
