@@ -307,4 +307,8 @@ else:
                 info7.pack()
             else:
                 messagebox.showinfo("Error!","Unfortunately an error was detected in the code you just submitted. Please try again!")
+                label2 = Label(root,text = "For further diagnostics of your code you can access mark.py in the directory where MARKER.py is in!")
+                label2.pack()
+                label2 = Label(root,text = "You may close this window now!")
+                label2.pack()
 root.mainloop()
