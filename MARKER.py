@@ -8,7 +8,7 @@ from tkinter import messagebox
 root = Tk()
 root.title("Marker made by Calin Novogreblevschi.")
 root.geometry("800x500")
-version = "Alpha V3"
+version = "Alpha V3.1"
 
 label = Label(root,text = "MARKER "+version)
 label.pack()
@@ -18,7 +18,11 @@ f.close()
 os.remove("temp_update.py")
 f = open("V.txt","w")
 f.close()
-os.remove("V.txt")
+try:
+    os.remove("V.txt")
+except PermissionError:
+    messagebox.showinfo("Error!","Unfortunately this program only supports only one instance of itself open at a time! Please use the other window.")
+    root.destroy()
 f = open("tasklist.txt","w")
 f.close()
 os.remove("tasklist.txt")
