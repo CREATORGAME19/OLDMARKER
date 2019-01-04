@@ -1,14 +1,18 @@
 1To write print("Hi")1`1@
 Hi~1
-1//-outputEND-//
+1//-outputEND-//print(,
+/END1
 2Write a program that detects if you type "Hi" and if this condition is true it should output "Hello there"2`"Hi",2@
 Hello there~2
-2//-outputEND-//
+2//-outputEND-//if,
+/END2
 3Make a program that takes 2 inputs and then it should output the sum of both numbers3`1,2,3@
 3~3
-3//-outputEND-//
+3//-outputEND-//input(,input(,+,
+/END3
 4A word game awards points for the letters used in a word.  
 The lower the frequency of the letter in the English language, the higher the score for the letter.  
 Write a program that asks the user to input a word.4`"calin",4@
 32~4
 4//-outputEND-//
+/END4
