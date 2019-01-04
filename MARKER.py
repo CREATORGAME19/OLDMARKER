@@ -346,7 +346,6 @@ else:
                 os.remove("mark.py")
                 os.remove("output.txt")
                 #os.remove("task.txt")
-                status_bar.destroy()
                 status_bar1.pack_forget()
                 status_bar1 = Label(root, text="Done!", bd=1, relief=SUNKEN, anchor=W)
                 status_bar1.pack(side=BOTTOM, fill=X)       
