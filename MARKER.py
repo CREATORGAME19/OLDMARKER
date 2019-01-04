@@ -67,27 +67,32 @@ elif pr.read() != pr2.read():
     os.remove("V.txt")
     os.remove("ex.txt")
 else:
+
     pr2.close()
     os.remove("ex.txt")
-    info1 = Label(root,text = "What is your four digit school code?: ")
-    info1.pack()
-    e = Entry(root, width=50)
-    e.pack(side=TOP)
-    ent_button = Button(root, text="Enter", width=10,command= lambda: find_school() )
-    ent_button.pack(side=TOP)
+    def school_code():
+        global info1
+        global e
+        global ent_button
+        info1 = Label(root,text = "What is your four digit school code?: ")
+        info1.pack()
+        e = Entry(root, width=50)
+        e.pack(side=TOP)
+        ent_button = Button(root, text="Enter", width=10,command= lambda: find_school() )
+        ent_button.pack(side=TOP)
+    school_code()
     def find_school():
-        global status_bar
-        status_bar = Label(root, text="Updating data…", bd=1, relief=SUNKEN, anchor=W)
-        status_bar.pack(side=BOTTOM, fill=X)
         school = e.get()
         e.destroy()
         info1.destroy()
         ent_button.destroy()
-        data = urllib.request.urlretrieve("https://raw.githubusercontent.com/CREATORGAME19/MARKER/master/"+school+"Directory.txt","tasklist.txt")
-        data1 = urllib.request.urlretrieve("https://raw.githubusercontent.com/CREATORGAME19/MARKER/master/"+school+"task.txt","task.txt")
-        status_bar.destroy()
-        status_bar = Label(root, text="Done!", bd=1, relief=SUNKEN, anchor=W)
-        status_bar.pack(side=BOTTOM, fill=X)
+        try:
+            data = urllib.request.urlretrieve("https://raw.githubusercontent.com/CREATORGAME19/MARKER/master/"+school+"Directory.txt","tasklist.txt")
+            data1 = urllib.request.urlretrieve("https://raw.githubusercontent.com/CREATORGAME19/MARKER/master/"+school+"task.txt","task.txt")
+        except urllib.error.HTTPError:
+            messagebox.showinfo("Error!","Incorrect school code. Try again!")
+            school_code()
+
         done()
 
     def done():
