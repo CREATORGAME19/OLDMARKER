@@ -201,7 +201,6 @@ else:
             outputvar1 = random.randint(1000,10000)
             outputvar = "a"+str(outputvar1)
             keywords_received = 0
-            print(keywords_list)
             for i in range(len(submit)):
                 if submit[i].find("print(") != -1:
                     code = submit[i]
@@ -216,8 +215,6 @@ else:
                     else:
                         a_submit.append(code[:find]+str(outputvar)+" = ["+str(value)+"]")
                         output+=1
-                        print(keywords_received)
-                        print(i)
                         if keywords_received < len(keywords_list):
                             if submit[i].find(keywords_list[keywords_received]) != -1:
                                 keywords_received += 1
