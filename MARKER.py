@@ -8,7 +8,7 @@ from tkinter import messagebox
 root = Tk()
 root.title("Marker made by Calin Novogreblevschi.")
 root.geometry("800x500")
-version = "Alpha V2.4"
+version = "Alpha V3"
 
 label = Label(root,text = "MARKER "+version)
 label.pack()
@@ -141,7 +141,23 @@ else:
                 endinput_list.append(word_input)
                 word_input = ""
         d = open("task.txt")
-        endexpecttask = d.read().find(str(task)+"//-END-//")
+        endexpecttask = d.read().find(str(task)+"//-outputEND-//")
+        d = open("task.txt")
+        keywordendnum = d.read().find("/END"+str(task))
+        d = open("task.txt")
+        keywords = d.read()[endexpecttask+16:keywordendnum]
+        global keywords_list
+        global keywords_received
+        keywords_list = []
+        keyword = ""
+        
+        d = open("task.txt")
+        for i in range(len(keywords)):
+            if keywords[i] == ",":
+                keywords_list.append(keyword)
+                keyword = ""
+            else:
+                keyword = str(keyword+keywords[i])
         d = open("task.txt")
         expectedoutput = d.read()[endinput+len(task)+2:endexpecttask]
         lines = 0
@@ -153,7 +169,7 @@ else:
         info5 = Label(root,text = "Enter your python code: ")
         info5.pack()
         messagebox.showinfo("Attention!","Please make sure you include a ; after every line of code you enter!")
-        e = Entry(root, width=60)
+        e = Entry(root, width=60, exportselection=0)
         e.pack(side=TOP)
         ent_button = Button(root, text="Enter", width=10,command= lambda: lines_entered() )
         ent_button.pack(side=TOP)
@@ -180,6 +196,8 @@ else:
             stat_input = 0
             outputvar1 = random.randint(1000,10000)
             outputvar = "a"+str(outputvar1)
+            keywords_received = 0
+            print(keywords_list)
             for i in range(len(submit)):
                 if submit[i].find("print(") != -1:
                     code = submit[i]
@@ -187,9 +205,18 @@ else:
                     value = code[find+6:-1]
                     if output > 0:
                         a_submit.append(code[:find]+str(outputvar)+".append("+str(value)+")")
+                        if keywords_received < len(keywords_list):
+                            if submit[i].find(keywords_list[keywords_received]) != -1:
+                                keywords_received += 1
+                            
                     else:
                         a_submit.append(code[:find]+str(outputvar)+" = ["+str(value)+"]")
                         output+=1
+                        print(keywords_received)
+                        print(i)
+                        if keywords_received < len(keywords_list):
+                            if submit[i].find(keywords_list[keywords_received]) != -1:
+                                keywords_received += 1
                 elif submit[i].find("input(") != -1:
                     code = submit[i]
                     find = submit[i].find("input(")
@@ -197,8 +224,15 @@ else:
                     a_submit.append(value+str(endinput_list[stat_input]))
                     stat_input += 1
                     received_input += 1
+                    if keywords_received < len(keywords_list):
+                        if submit[i].find(keywords_list[keywords_received]) != -1:
+                            keywords_received += 1
                 else:
                     a_submit.append(submit[i])
+                    if keywords_received < len(keywords_list):
+                        if submit[i].find(keywords_list[keywords_received]) != -1:
+                            keywords_received += 1
+
             file = open("mark.py", "w")
             file.write(a_submit[0])
             file.close()
@@ -278,7 +312,7 @@ else:
                 status_bar1 = Label(root, text="Done filtering!(expected output)", bd=1, relief=SUNKEN, anchor=W)
                 status_bar1.pack(side=BOTTOM, fill=X)
                 mark = 0
-                total_marks = (len(words1)-1)+len(endinput_list)
+                total_marks = (len(words1)-1)+len(endinput_list)+len(keywords_list)
                 for i in range(len(words1)-1):
                     if words1[i].upper() == words[i].upper():
                         mark+=1
@@ -286,6 +320,7 @@ else:
                         mark+=1
                 if received_input == len(endinput_list):
                         mark+=received_input
+                mark += keywords_received
                 status_bar1.pack_forget()
                 status_bar1 = Label(root, text="Cleaning up...", bd=1, relief=SUNKEN, anchor=W)
                 status_bar1.pack(side=BOTTOM, fill=X)
