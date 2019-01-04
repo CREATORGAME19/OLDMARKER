@@ -313,11 +313,14 @@ else:
                 status_bar1.pack(side=BOTTOM, fill=X)
                 mark = 0
                 total_marks = (len(words1)-1)+len(endinput_list)+len(keywords_list)
-                for i in range(len(words1)-1):
-                    if words1[i].upper() == words[i].upper():
-                        mark+=1
-                    elif words[i].upper().find(words1[i].upper()) != -1:
-                        mark+=1
+                try:
+                    for i in range(len(words1)-1):
+                        if words1[i].upper() == words[i].upper():
+                            mark+=1
+                        elif words[i].upper().find(words1[i].upper()) != -1:
+                            mark+=1
+                except IndexError:
+                    messagebox.showinfo("Error","No output detected! Was expecting output! Press OK to see final grade.")
                 if received_input == len(endinput_list):
                         mark+=received_input
                 mark += keywords_received
